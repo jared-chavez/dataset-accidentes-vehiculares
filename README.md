@@ -6,47 +6,83 @@ Este repositorio contiene un dataset limpio de accidentes movilísticos generado
 
 ```
 dataset/
-├── raw_accidents_data.csv          # Dataset original (datos brutos)
-├── cleaned_accidents_data.csv      # Dataset limpio (procesado)
-├── data_cleaning_script.py         # Script de limpieza automatizada
-├── requirements.txt                # Dependencias de Python
-├── .gitignore                      # Archivos a ignorar en Git
-└── README.md                      # Este archivo
+├── raw_accidents_data.csv                    # Dataset original (datos brutos)
+├── cleaned_accidents_data.csv                # Dataset limpio (procesado)
+├── data_cleaning_script.py                   # Script de limpieza automatizada
+├── datawarehouse_factaccidents.csv           # Tabla de hechos del data warehouse
+├── datawarehouse_dimtime.csv                 # Dimensión tiempo
+├── datawarehouse_dimlocation.csv             # Dimensión ubicación
+├── datawarehouse_dimvehicle.csv              # Dimensión vehículo
+├── datawarehouse_dimdriver.csv               # Dimensión conductor
+├── requirements.txt                          # Dependencias de Python
+├── .gitignore                                # Archivos a ignorar en Git
+└── README.md                                # Este archivo
 ```
 
 ## Especificaciones del Dataset
 
 ### Dataset Limpio (`cleaned_accidents_data.csv`)
 
-**Registros:** 104 accidentes  
-**Período:** Enero 2022 - Diciembre 2024  
-**Calidad:** 99.0% de datos conservados (1 registro eliminado por edad inválida)
+**Registros:** 2938 accidentes  
+**Período:** Enero 2021 - Diciembre 2024  
+**Calidad:** 96.0% de datos conservados (122 registros eliminados por edades inválidas)
 
 #### Columnas del Dataset
 
 | Columna | Tipo | Descripción | Valores Posibles |
 |---------|------|-------------|------------------|
-| `incident_id` | Entero | Identificador único del accidente | 101-205 |
+| `incident_id` | Entero | Identificador único del accidente | 101-3160 |
 | `incident_date` | Fecha | Fecha del accidente | Formato: YYYY-MM-DD |
 | `driver_age` | Decimal | Edad del conductor | 18-80 años |
 | `road_conditions` | Categórico | Condiciones del camino | Dry, Wet, Icy |
 | `weather_conditions` | Categórico | Condiciones climáticas | Sunny, Rain, Snow, Cloudy, Clear |
 | `accident_severity` | Categórico | Severidad del accidente | Minor, Serious, Critical |
-| `number_of_vehicles` | Entero | Número de vehículos involucrados | 1-5 |
-| `number_of_fatalities` | Entero | Número de fatalidades | 0-3 |
+| `number_of_vehicles` | Entero | Número de vehículos involucrados | 1-8 |
+| `number_of_fatalities` | Entero | Número de fatalidades | 0-5 |
 
 #### Estadísticas del Dataset
 
-- **Rango de fechas:** 2022-01-07 a 2024-12-22
-- **Edad promedio de conductores:** 48.7 años
-- **Total de vehículos involucrados:** 327
-- **Total de fatalidades:** 270
+- **Rango de fechas:** 2021-01-02 a 2024-12-31
+- **Edad promedio de conductores:** 51.4 años
+- **Total de vehículos involucrados:** 13105
+- **Total de fatalidades:** 8865
 
 #### Distribución por Severidad
 
-- **Serious:** 52 accidentes (50.0%)
-- **Minor:** 35 accidentes (33.7%)
-- **Critical:** 17 accidentes (16.3%)
+- **Minor:** 1035 accidentes (35.2%)
+- **Critical:** 961 accidentes (32.7%)
+- **Serious:** 942 accidentes (32.1%)
+
+## 🏗️ Data Warehouse - Tablas Dimensionales
+
+El proyecto incluye un diseño de data warehouse basado en el esquema de estrella, con una tabla de hechos central y tablas de dimensión que proporcionan contexto descriptivo.
+
+### Tabla de Hechos (FactAccidents)
+- **Archivo:** `datawarehouse_factaccidents.csv`
+- **Contenido:** Métricas cuantitativas y claves foráneas
+- **Campos:** accident_key, date_key, location_key, vehicle_key, driver_key, number_of_vehicles, number_of_fatalities, accident_severity
+
+### Tablas de Dimensión
+
+#### DimTime (Dimensión Tiempo)
+- **Archivo:** `datawarehouse_dimtime.csv`
+- **Campos:** date_key, incident_date, day_of_week, month, year
+- **Propósito:** Análisis temporal de accidentes
+
+#### DimLocation (Dimensión Ubicación)
+- **Archivo:** `datawarehouse_dimlocation.csv`
+- **Campos:** location_key, road_conditions, weather_conditions
+- **Propósito:** Análisis por condiciones ambientales
+
+#### DimVehicle (Dimensión Vehículo)
+- **Archivo:** `datawarehouse_dimvehicle.csv`
+- **Campos:** vehicle_key, vehicle_type, vehicle_make, vehicle_model
+- **Propósito:** Análisis por características del vehículo
+
+#### DimDriver (Dimensión Conductor)
+- **Archivo:** `datawarehouse_dimdriver.csv`
+- **Campos:** driver_key, driver_age, driver_gender
+- **Propósito:** Análisis demográfico de conductores
 
 ## 🛠️ Proceso de Limpieza
 
