@@ -9,11 +9,19 @@ dataset/
 ├── raw_accidents_data.csv                    # Dataset original (datos brutos)
 ├── cleaned_accidents_data.csv                # Dataset limpio (procesado)
 ├── data_cleaning_script.py                   # Script de limpieza automatizada
+├── advanced_etl_tool.py                     # Herramienta ETL avanzada
+├── create_unified_dimensions.py             # Generador de dimensiones unificadas
+├── unified_dimensions_table.csv              # Tabla de dimensiones unificada
 ├── datawarehouse_factaccidents.csv           # Tabla de hechos del data warehouse
 ├── datawarehouse_dimtime.csv                 # Dimensión tiempo
 ├── datawarehouse_dimlocation.csv             # Dimensión ubicación
 ├── datawarehouse_dimvehicle.csv              # Dimensión vehículo
 ├── datawarehouse_dimdriver.csv               # Dimensión conductor
+├── cleaned_accidents_data.xlsx               # Dataset limpio en Excel
+├── cleaned_accidents_data.json               # Dataset limpio en JSON
+├── accidents_cleaned.db                      # Base de datos SQL
+├── cleaned_accidents_data_powerbi.xlsx       # Dataset optimizado para Power BI
+├── powerbi_config.json                       # Configuración para Power BI
 ├── requirements.txt                          # Dependencias de Python
 ├── .gitignore                                # Archivos a ignorar en Git
 └── README.md                                # Este archivo
@@ -23,9 +31,9 @@ dataset/
 
 ### Dataset Limpio (`cleaned_accidents_data.csv`)
 
-**Registros:** 2938 accidentes  
+**Registros:** 2363 accidentes  
 **Período:** Enero 2021 - Diciembre 2024  
-**Calidad:** 96.0% de datos conservados (122 registros eliminados por edades inválidas)
+**Calidad:** 77.2% de datos conservados (697 registros eliminados por problemas de calidad)
 
 #### Columnas del Dataset
 
@@ -83,6 +91,40 @@ El proyecto incluye un diseño de data warehouse basado en el esquema de estrell
 - **Archivo:** `datawarehouse_dimdriver.csv`
 - **Campos:** driver_key, driver_age, driver_gender
 - **Propósito:** Análisis demográfico de conductores
+
+## 🔧 Herramienta ETL Avanzada
+
+### Características Principales
+
+La herramienta ETL avanzada (`advanced_etl_tool.py`) soporta múltiples formatos de entrada y salida:
+
+#### Formatos de Entrada Soportados
+- **CSV** - Archivos separados por comas
+- **Excel** - Archivos .xlsx y .xls
+- **JSON** - Archivos de datos estructurados
+- **SQL** - Consultas a bases de datos
+
+#### Formatos de Salida Soportados
+- **CSV** - Para análisis en Python/R
+- **Excel** - Para análisis en Excel
+- **JSON** - Para aplicaciones web
+- **SQL** - Base de datos SQLite
+- **Power BI** - Archivos optimizados para Power BI
+
+#### Configuración de Limpieza Ajustable
+- **75% de conservación** - Configurado para mantener 3/4 de los datos
+- **Limpieza por etapas** - Fechas, edades, categóricos, numéricos
+- **Validación automática** - Detección y corrección de problemas
+
+### Tabla de Dimensiones Unificada
+
+El archivo `unified_dimensions_table.csv` contiene todas las dimensiones en una sola tabla:
+
+- **Dimensiones temporales**: día, mes, año, trimestre, fin de semana
+- **Dimensiones del conductor**: edad, género, grupo etario
+- **Dimensiones del vehículo**: tipo, marca, modelo
+- **Dimensiones ambientales**: condiciones del camino y clima
+- **Dimensiones estacionales**: primavera, verano, otoño, invierno
 
 ## 🛠️ Proceso de Limpieza
 
