@@ -10,21 +10,21 @@ dataset/
 ├── cleaned_accidents_data.csv                # Dataset limpio (procesado)
 ├── data_cleaning_script.py                   # Script de limpieza automatizada
 ├── advanced_etl_tool.py                     # Herramienta ETL avanzada
-├── create_unified_dimensions.py             # Generador de dimensiones unificadas
-├── unified_dimensions_table.csv              # Tabla de dimensiones unificada
-├── datawarehouse_factaccidents.csv           # Tabla de hechos del data warehouse
-├── datawarehouse_dimtime.csv                 # Dimensión tiempo
-├── datawarehouse_dimlocation.csv             # Dimensión ubicación
-├── datawarehouse_dimvehicle.csv              # Dimensión vehículo
-├── datawarehouse_dimdriver.csv               # Dimensión conductor
-├── cleaned_accidents_data.xlsx               # Dataset limpio en Excel
-├── cleaned_accidents_data.json               # Dataset limpio en JSON
-├── accidents_cleaned.db                      # Base de datos SQL
-├── cleaned_accidents_data_powerbi.xlsx       # Dataset optimizado para Power BI
-├── powerbi_config.json                       # Configuración para Power BI
 ├── requirements.txt                          # Dependencias de Python
 ├── .gitignore                                # Archivos a ignorar en Git
-└── README.md                                # Este archivo
+├── README.md                                # Este archivo
+└── data/                                    # Carpeta con archivos adicionales
+    ├── datawarehouse_factaccidents.csv       # Tabla de hechos del data warehouse
+    ├── datawarehouse_dimtime.csv             # Dimensión tiempo
+    ├── datawarehouse_dimlocation.csv         # Dimensión ubicación
+    ├── datawarehouse_dimvehicle.csv          # Dimensión vehículo
+    ├── datawarehouse_dimdriver.csv           # Dimensión conductor
+    ├── unified_dimensions_table.csv          # Tabla de dimensiones unificada
+    ├── cleaned_accidents_data.xlsx           # Dataset limpio en Excel
+    ├── cleaned_accidents_data.json              # Dataset limpio en JSON
+    ├── accidents_cleaned.db                  # Base de datos SQL
+    ├── cleaned_accidents_data_powerbi.xlsx   # Dataset optimizado para Power BI
+    └── powerbi_config.json                   # Configuración para Power BI
 ```
 
 ## Especificaciones del Dataset
