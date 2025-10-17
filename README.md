@@ -79,8 +79,8 @@ El proyecto incluye un diseño de data warehouse basado en el esquema de estrell
 
 #### DimLocation (Dimensión Ubicación)
 - **Archivo:** `datawarehouse_dimlocation.csv`
-- **Campos:** location_key, road_conditions, weather_conditions
-- **Propósito:** Análisis por condiciones ambientales
+- **Campos:** location_key, road_conditions, weather_conditions, track
+- **Propósito:** Análisis por condiciones ambientales y rutas (track) donde ocurren accidentes
 
 #### DimVehicle (Dimensión Vehículo)
 - **Archivo:** `datawarehouse_dimvehicle.csv`
