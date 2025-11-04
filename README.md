@@ -2,29 +2,31 @@
 
 Este repositorio contiene un dataset limpio de accidentes movilísticos generado a partir de datos brutos mediante un proceso automatizado de limpieza y validación de datos. El dataset está diseñado para análisis de extracción de conocimientos y minería de datos.
 
-## 📁 Estructura del Repositorio
+## Estructura del Repositorio
 
 ```
 dataset/
 ├── raw_accidents_data.csv                    # Dataset original (datos brutos)
 ├── cleaned_accidents_data.csv                # Dataset limpio (procesado)
+├── supervised_learning.py                    # Script principal de ML (wrapper)
 ├── data_cleaning_script.py                   # Script de limpieza automatizada
 ├── advanced_etl_tool.py                     # Herramienta ETL avanzada
 ├── requirements.txt                          # Dependencias de Python
 ├── .gitignore                                # Archivos a ignorar en Git
-├── README.md                                # Este archivo
-└── data/                                    # Carpeta con archivos adicionales
+├── README.md                                 # Este archivo
+├── supervised_learning/                     # Módulo de análisis supervisado
+│   ├── supervised_learning_main.py          # Script principal
+│   ├── models/                               # Modelos ML
+│   ├── preprocessing/                       # Preparación de datos
+│   ├── evaluation/                           # Evaluación y métricas
+│   └── results/                              # Resultados generados
+└── data/                                     # Carpeta con archivos adicionales
     ├── datawarehouse_factaccidents.csv       # Tabla de hechos del data warehouse
     ├── datawarehouse_dimtime.csv             # Dimensión tiempo
     ├── datawarehouse_dimlocation.csv         # Dimensión ubicación
     ├── datawarehouse_dimvehicle.csv          # Dimensión vehículo
     ├── datawarehouse_dimdriver.csv           # Dimensión conductor
-    ├── unified_dimensions_table.csv          # Tabla de dimensiones unificada
-    ├── cleaned_accidents_data.xlsx           # Dataset limpio en Excel
-    ├── cleaned_accidents_data.json              # Dataset limpio en JSON
-    ├── accidents_cleaned.db                  # Base de datos SQL
-    ├── cleaned_accidents_data_powerbi.xlsx   # Dataset optimizado para Power BI
-    └── powerbi_config.json                   # Configuración para Power BI
+    └── unified_dimensions_table.csv          # Tabla de dimensiones unificada
 ```
 
 ## Especificaciones del Dataset
@@ -61,7 +63,7 @@ dataset/
 - **Critical:** 961 accidentes (32.7%)
 - **Serious:** 942 accidentes (32.1%)
 
-## 🏗️ Data Warehouse - Tablas Dimensionales
+## Data Warehouse - Tablas Dimensionales
 
 El proyecto incluye un diseño de data warehouse basado en el esquema de estrella, con una tabla de hechos central y tablas de dimensión que proporcionan contexto descriptivo.
 
@@ -92,7 +94,7 @@ El proyecto incluye un diseño de data warehouse basado en el esquema de estrell
 - **Campos:** driver_key, driver_age, driver_gender
 - **Propósito:** Análisis demográfico de conductores
 
-## 🔧 Herramienta ETL Avanzada
+## Herramienta ETL Avanzada
 
 ### Características Principales
 
@@ -126,7 +128,7 @@ El archivo `unified_dimensions_table.csv` contiene todas las dimensiones en una 
 - **Dimensiones ambientales**: condiciones del camino y clima
 - **Dimensiones estacionales**: primavera, verano, otoño, invierno
 
-## 🛠️ Proceso de Limpieza
+## Proceso de Limpieza
 
 ### Problemas Identificados en los Datos Originales
 
@@ -146,7 +148,7 @@ El archivo `unified_dimensions_table.csv` contiene todas las dimensiones en una 
 4. **Validación numérica:** Verificación de rangos válidos
 5. **Eliminación de duplicados:** No se encontraron duplicados
 
-## 🚀 Cómo Generar el Dataset Limpio
+## Cómo Generar el Dataset Limpio
 
 ### Prerrequisitos
 
@@ -184,7 +186,130 @@ El script generará:
 - Reporte de calidad de datos en consola
 - Estadísticas del dataset procesado
 
-## 📊 Casos de Uso para Extracción de Conocimientos
+## Análisis Supervisado - Machine Learning
+
+El proyecto incluye un módulo completo de análisis supervisado para entrenar y evaluar modelos de clasificación y regresión.
+
+### Estructura del Módulo
+
+```
+supervised_learning/
+├── supervised_learning_main.py      # Script principal
+├── models/
+│   ├── classification_models.py      # Modelos de clasificación
+│   ├── regression_models.py          # Modelos de regresión
+│   └── model_utils.py                # Utilidades
+├── preprocessing/
+│   ├── data_preparation.py           # Preparación de datos
+│   └── feature_engineering.py        # Feature engineering
+├── evaluation/
+│   ├── metrics_calculation.py       # Cálculo de métricas
+│   └── visualizations.py             # Visualizaciones
+└── results/
+    ├── classification_results/       # Resultados de clasificación
+    └── regression_results/           # Resultados de regresión
+```
+
+### Problemas Supervisados
+
+#### 1. Clasificación - Predicción de Severidad del Accidente
+
+**Tipo:** Clasificación multiclase (3 clases)  
+**Variable Objetivo:** `accident_severity` (Minor, Serious, Critical)  
+**Algoritmos Implementados:**
+- Logistic Regression (baseline)
+- Random Forest Classifier
+- Gradient Boosting (XGBoost) - opcional
+
+**Métricas de Evaluación:**
+- Accuracy, Precision, Recall, F1-Score (Macro y Weighted)
+- Matriz de confusión
+- Importancia de features
+
+#### 2. Regresión - Predicción de Número de Fatalidades
+
+**Tipo:** Regresión (valor numérico continuo)  
+**Variable Objetivo:** `number_of_fatalities` (0-5)  
+**Algoritmos Implementados:**
+- Linear Regression (baseline)
+- Ridge Regression
+- Random Forest Regressor
+- Gradient Boosting Regressor (XGBoost) - opcional
+
+**Métricas de Evaluación:**
+- MAE (Mean Absolute Error)
+- RMSE (Root Mean Squared Error)
+- R² (Coeficiente de Determinación)
+- MAPE (Mean Absolute Percentage Error)
+
+### Ejecución del Análisis Supervisado
+
+1. **Instalar dependencias:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Ejecutar desde la raíz del proyecto:**
+   ```bash
+   python supervised_learning.py
+   ```
+
+   O desde dentro de la carpeta:
+   ```bash
+   cd supervised_learning
+   python supervised_learning_main.py
+   ```
+
+### Proceso de Entrenamiento
+
+1. **Preparación de Datos:**
+   - Carga y merge de datasets (`cleaned_accidents_data.csv` + `unified_dimensions_table.csv`)
+   - Feature engineering (creación de variables derivadas)
+   - Encoding de variables categóricas (One-Hot Encoding)
+   - Normalización de features numéricas
+
+2. **División de Datos:**
+   - Train: 70% de los datos
+   - Validation: 15% de los datos
+   - Test: 15% de los datos
+   - Estratificación para mantener distribución de clases
+
+3. **Entrenamiento:**
+   - Entrenamiento de múltiples modelos
+   - Optimización de hiperparámetros (opcional)
+   - Validación en conjunto de validación
+
+4. **Evaluación:**
+   - Evaluación en conjunto de test
+   - Cálculo de métricas completas
+   - Generación de visualizaciones
+
+### Resultados Generados
+
+**Clasificación:**
+- `metrics_table.csv` - Tabla comparativa de métricas
+- `confusion_matrix.png` - Matriz de confusión
+- `metrics_comparison.png` - Comparación de métricas
+- `feature_importance.png` - Importancia de features
+- `feature_importance.csv` - Datos de importancia
+
+**Regresión:**
+- `metrics_table.csv` - Tabla comparativa de métricas
+- `predictions_vs_real.png` - Predicciones vs valores reales
+- `residuals_plot.png` - Análisis de residuales
+- `metrics_comparison.png` - Comparación de métricas
+- `feature_importance.png` - Importancia de features
+- `feature_importance.csv` - Datos de importancia
+
+### Feature Engineering
+
+El módulo crea automáticamente features derivadas:
+- Features temporales: día del mes, semana del año, inicio/fin de mes
+- Features de edad: edad al cuadrado, indicadores de senior/joven
+- Features de interacción: fatalidades por vehículo, indicadores de alta severidad
+- Features de condiciones: combinación de condiciones del camino y clima
+
+### Casos de Uso para Extracción de Conocimientos
 
 ### Análisis Exploratorio de Datos (EDA)
 - Distribución temporal de accidentes
@@ -202,7 +327,7 @@ El script generará:
 - Series temporales de accidentes
 - Diagramas de dispersión edad vs severidad
 
-## 🔍 Ejemplos de Consultas
+## Ejemplos de Consultas
 
 ### Análisis de Accidentes por Condiciones Climáticas
 ```python
@@ -220,14 +345,14 @@ age_distribution = critical_accidents['driver_age'].describe()
 print(age_distribution)
 ```
 
-## 📈 Métricas de Calidad
+## Métricas de Calidad
 
 - **Completitud:** 100% (sin valores faltantes)
 - **Consistencia:** 100% (formatos estandarizados)
 - **Precisión:** 93.3% (1 registro eliminado por validación)
 - **Validez:** 100% (todos los valores en rangos esperados)
 
-## 🤝 Contribuciones
+## Contribuciones
 
 Para contribuir al proyecto:
 1. Fork del repositorio
@@ -236,7 +361,7 @@ Para contribuir al proyecto:
 4. Actualizar documentación
 5. Crear Pull Request
 
-## 📝 Notas Técnicas
+## Notas Técnicas
 
 - **Encoding:** UTF-8
 - **Separador:** Coma (,)
