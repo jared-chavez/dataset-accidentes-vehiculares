@@ -101,10 +101,10 @@ El proyecto incluye un diseño de data warehouse basado en el esquema de estrell
 La herramienta ETL avanzada (`advanced_etl_tool.py`) soporta múltiples formatos de entrada y salida:
 
 #### Formatos de Entrada Soportados
-- **CSV** - Archivos separados por comas
-- **Excel** - Archivos .xlsx y .xls
-- **JSON** - Archivos de datos estructurados
-- **SQL** - Consultas a bases de datos
+- **CSV** - 
+- **Excel** - 
+- **JSON** - 
+- **SQL** - 
 
 #### Formatos de Salida Soportados
 - **CSV** - Para análisis en Python/R
@@ -370,4 +370,4 @@ Para contribuir al proyecto:
 
 **Última actualización:** 2024  
 **Versión del dataset:** 1.0  
-**Licencia:** Uso académico y de investigación
+**Licencia:** Uso académico y de investigación (si hice un commit)
