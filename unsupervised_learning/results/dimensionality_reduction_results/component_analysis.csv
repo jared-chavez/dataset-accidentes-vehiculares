@@ -1,0 +1,11 @@
+PC,Variance_Explained,Top_Features
+PC1,0.15402378974984557,"driver_age, age_squared, is_senior, is_young, month"
+PC2,0.14351531628325948,"fatalities_per_vehicle, number_of_fatalities, is_high_fatalities, number_of_vehicles, is_high_severity_vehicle"
+PC3,0.1133258756070702,"quarter, month, fatalities_per_vehicle, year, is_high_severity_vehicle"
+PC4,0.10583936130967447,"number_of_vehicles, is_high_severity_vehicle, number_of_fatalities, is_high_fatalities, fatalities_per_vehicle"
+PC5,0.08593295572115504,"day_of_month, is_month_end, is_month_start, week_of_year, is_high_risk_conditions"
+PC6,0.06120175676596661,"year, week_of_year, is_high_risk_conditions, is_month_start, is_month_end"
+PC7,0.059533973157651174,"is_high_risk_conditions, is_month_start, is_month_end, week_of_year, year"
+PC8,0.05867706838268508,"week_of_year, year, is_high_risk_conditions, is_young, is_month_start"
+PC9,0.054950505207265986,"year, is_month_end, is_high_risk_conditions, is_month_start, week_of_year"
+PC10,0.05278290434605587,"is_young, is_senior, age_squared, week_of_year, is_high_risk_conditions"

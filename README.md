@@ -8,10 +8,12 @@ Este repositorio contiene un dataset limpio de accidentes movilísticos generado
 dataset/
 ├── raw_accidents_data.csv                    # Dataset original (datos brutos)
 ├── cleaned_accidents_data.csv                # Dataset limpio (procesado)
-├── supervised_learning.py                    # Script principal de ML (wrapper)
+├── supervised_learning.py                    # Script principal de ML supervisado (wrapper)
+├── unsupervised_learning.py                  # Script principal de ML no supervisado (wrapper)
 ├── data_cleaning_script.py                   # Script de limpieza automatizada
 ├── advanced_etl_tool.py                     # Herramienta ETL avanzada
 ├── requirements.txt                          # Dependencias de Python
+├── venv/                                     # Entorno virtual (compartido)
 ├── .gitignore                                # Archivos a ignorar en Git
 ├── README.md                                 # Este archivo
 ├── supervised_learning/                     # Módulo de análisis supervisado
@@ -20,6 +22,13 @@ dataset/
 │   ├── preprocessing/                       # Preparación de datos
 │   ├── evaluation/                           # Evaluación y métricas
 │   └── results/                              # Resultados generados
+└── unsupervised_learning/                   # Módulo de análisis no supervisado
+    ├── unsupervised_learning_main.py         # Script principal
+    ├── models/                               # Modelos de clustering y reducción
+    ├── preprocessing/                         # Preparación de datos
+    ├── evaluation/                           # Evaluación y métricas
+    ├── optimization/                          # Optimización de hiperparámetros
+    └── results/                              # Resultados generados
 └── data/                                     # Carpeta con archivos adicionales
     ├── datawarehouse_factaccidents.csv       # Tabla de hechos del data warehouse
     ├── datawarehouse_dimtime.csv             # Dimensión tiempo
@@ -186,9 +195,13 @@ El script generará:
 - Reporte de calidad de datos en consola
 - Estadísticas del dataset procesado
 
+## Análisis de Machine Learning
+
+El proyecto incluye dos módulos completos de análisis de machine learning: **supervisado** y **no supervisado**.
+
 ## Análisis Supervisado - Machine Learning
 
-El proyecto incluye un módulo completo de análisis supervisado para entrenar y evaluar modelos de clasificación y regresión.
+El módulo de análisis supervisado permite entrenar y evaluar modelos de clasificación y regresión.
 
 ### Estructura del Módulo
 
@@ -367,6 +380,164 @@ Para contribuir al proyecto:
 - **Separador:** Coma (,)
 - **Formato de fechas:** ISO 8601 (YYYY-MM-DD)
 - **Precisión decimal:** 1 decimal para edades
+
+## Análisis No Supervisado - Machine Learning
+
+El módulo de análisis no supervisado implementa técnicas de clustering y reducción de dimensionalidad para descubrir patrones ocultos en los datos de accidentes.
+
+### Estructura del Módulo
+
+```
+unsupervised_learning/
+├── unsupervised_learning_main.py      # Script principal
+├── models/
+│   ├── clustering_models.py            # Modelos de clustering (K-Means, DBSCAN, Jerárquico)
+│   └── dimensionality_reduction.py    # Reducción de dimensionalidad (PCA, t-SNE)
+├── preprocessing/
+│   └── data_preparation.py            # Preparación de datos para clustering
+├── evaluation/
+│   ├── metrics_calculation.py         # Cálculo de métricas no supervisadas
+│   └── visualizations.py             # Visualizaciones de clusters y componentes
+├── optimization/
+│   └── hyperparameter_tuning.py      # Optimización de hiperparámetros
+└── results/
+    ├── clustering_results/            # Resultados de clustering
+    └── dimensionality_reduction_results/  # Resultados de reducción de dimensionalidad
+```
+
+### Algoritmos Implementados
+
+#### 1. Clustering
+
+**K-Means:**
+- Agrupación basada en centroides
+- Determinación automática de k óptimo mediante método del codo y silhouette score
+- Métricas: Silhouette Score, Calinski-Harabasz, Davies-Bouldin
+
+**DBSCAN:**
+- Clustering basado en densidad
+- Detección automática de outliers
+- Parámetros optimizados: eps y min_samples
+
+**Clustering Jerárquico (Agglomerative):**
+- Agrupación jerárquica aglomerativa
+- Métodos de linkage: ward, complete, average
+- Visualización mediante dendrogramas
+
+#### 2. Reducción de Dimensionalidad
+
+**PCA (Principal Component Analysis):**
+- Reducción de dimensionalidad lineal
+- Retención del 95% de varianza
+- Análisis de componentes principales
+
+**t-SNE (t-Distributed Stochastic Neighbor Embedding):**
+- Reducción de dimensionalidad no lineal
+- Visualización en 2D/3D
+- Preservación de estructura local
+
+### Métricas de Evaluación
+
+- **Silhouette Score:** Mide la calidad de la separación entre clusters (-1 a 1, mayor es mejor)
+- **Calinski-Harabasz Index:** Ratio de varianza entre clusters y dentro de clusters (mayor es mejor)
+- **Davies-Bouldin Index:** Mide la similitud promedio entre clusters (menor es mejor)
+- **Inertia:** Suma de distancias al cuadrado de muestras a su centroide más cercano (solo K-Means)
+
+### Ejecución del Análisis No Supervisado
+
+1. **Instalar dependencias:**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. **Ejecutar desde la raíz del proyecto:**
+   ```bash
+   python unsupervised_learning.py
+   ```
+
+   O desde dentro de la carpeta:
+   ```bash
+   cd unsupervised_learning
+   python unsupervised_learning_main.py
+   ```
+
+### Proceso de Análisis
+
+1. **Preparación de Datos:**
+   - Carga y merge de datasets
+   - Feature engineering (variables derivadas)
+   - Encoding de variables categóricas (One-Hot Encoding)
+   - Normalización de features numéricas (StandardScaler)
+
+2. **Reducción de Dimensionalidad:**
+   - Aplicación de PCA (12 componentes para 95% varianza)
+   - Aplicación de t-SNE para visualización (opcional)
+
+3. **Determinación de K Óptimo:**
+   - Método del codo (Elbow Method)
+   - Análisis de Silhouette Score
+   - Rango de k: 2-10
+
+4. **Clustering:**
+   - Entrenamiento de K-Means con k óptimo
+   - Entrenamiento de DBSCAN con parámetros optimizados
+   - Entrenamiento de Clustering Jerárquico
+
+5. **Evaluación:**
+   - Cálculo de métricas para cada modelo
+   - Comparación de modelos
+   - Identificación del mejor modelo
+
+6. **Visualización:**
+   - Gráficos de clusters en 2D/3D (PCA)
+   - Visualizaciones t-SNE
+   - Dendrogramas (clustering jerárquico)
+   - Heatmaps de características de clusters
+   - Gráficos de tamaños de clusters
+
+7. **Caracterización:**
+   - Análisis de características por cluster
+   - Identificación de patrones
+   - Exportación de resultados
+
+### Resultados Generados
+
+**Clustering:**
+- `metrics_comparison.csv` - Tabla comparativa de métricas
+- `metrics_comparison.png` - Gráfico comparativo de métricas
+- `kmeans_clusters.png` - Visualización de clusters K-Means
+- `kmeans_cluster_sizes.png` - Distribución de tamaños de clusters
+- `dbscan_clusters.png` - Visualización de clusters DBSCAN
+- `dbscan_cluster_sizes.png` - Distribución de tamaños de clusters
+- `hierarchical_clusters.png` - Visualización de clusters jerárquicos
+- `hierarchical_dendrogram.png` - Dendrograma jerárquico
+- `elbow_method.png` - Método del codo para determinar k
+- `silhouette_scores.png` - Scores de silhouette por k
+- `cluster_characteristics.csv` - Características de cada cluster
+- `cluster_heatmap.png` - Heatmap de características
+- `cluster_characteristics_bars.png` - Gráfico de barras de características
+
+**Reducción de Dimensionalidad:**
+- `pca_variance_explained.png` - Varianza explicada por componentes
+- `pca_components.png` - Visualización de componentes principales
+- `component_analysis.csv` - Análisis de componentes principales
+- `tsne_visualization.png` - Visualización t-SNE
+
+### Resultados Típicos
+
+Basado en el análisis del dataset de accidentes:
+
+- **Mejor modelo:** DBSCAN (Silhouette Score: ~0.35)
+- **K óptimo para K-Means:** 9 clústeres
+- **Componentes PCA:** 12 componentes explican 95% de varianza
+- **Clusters DBSCAN:** ~47 clusters con ~39% outliers
+
+### Optimización de Hiperparámetros (Opcional)
+
+El módulo incluye optimización automática de hiperparámetros:
+- K-Means: optimización de k, init, n_init, max_iter
+- DBSCAN: optimización de eps y min_samples
+- Clustering Jerárquico: optimización de linkage y metric
 
 **Última actualización:** 2024  
 **Versión del dataset:** 1.0  
